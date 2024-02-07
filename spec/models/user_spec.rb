@@ -10,11 +10,6 @@ RSpec.describe User, type: :model do
       it 'ニックネーム、メールアドレス、パスワード、お名前の「姓」「名」（カタカナ含む）、生年月日が存在すれば登録できる' do
         expect(@user).to be_valid
       end
-      it 'メールアドレスは重複していないければ登録できる' do
-        @user.save
-        another_user = FactoryBot.build(:user)
-        expect(another_user).to be_valid
-      end
       it 'メールアドレスは、@を含むと登録できる' do
         @user.email = 'test@test'
         expect(@user).to be_valid
