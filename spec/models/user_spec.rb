@@ -6,6 +6,26 @@ RSpec.describe User, type: :model do
   end
 
   describe 'ユーザー新規登録' do
+    context '新規登録できるとき' do
+      it 'ニックネーム、メールアドレス、パスワード、お名前の「姓」「名」（カタカナ含む）、生年月日が存在すれば登録できる' do
+        expect(@user).to be_valid
+      end
+      it 'メールアドレスは重複していないければ登録できる' do
+        @user.save
+        another_user = FactoryBot.build(:user)
+        expect(another_user).to be_valid
+      end
+      it 'メールアドレスは、@を含むと登録できる' do
+        @user.email = 'test@test'
+        expect(@user).to be_valid
+      end
+      it 'パスワードは、6文字以上、半角英数字混合でパスワードとパスワード（確認）が一致すれば登録できる' do
+        @user.password = 'a12345'
+        @user.password_confirmation = 'a12345'
+        expect(@user).to be_valid
+      end
+    end
+    context '新規登録できないとき' do
     it 'ニックネームは、空では登録できない' do
       @user.nickname = ''
       @user.valid?
@@ -23,8 +43,7 @@ RSpec.describe User, type: :model do
       another_user.valid?
       expect(another_user.errors.full_messages).to include("Email has already been taken")
     end
-
-    it 'emailは、@を含まないと登録できない' do
+    it 'メールアドレスは、@を含まないと登録できない' do
       @user.email = 'testmail'
       @user.valid?
       expect(@user.errors.full_messages).to include("Email is invalid")
@@ -64,9 +83,29 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
     end
+   end
   end
 
   describe '本人情報確認' do
+    context '新規登録できるとき' do
+      it 'お名前「姓」は、全角であれば登録できる' do
+        @user.first_name = '山田'
+        expect(@user).to be_valid
+      end
+      it 'お名前「名」は、全角であれば登録できる' do
+        @user.first_name = '太郎'
+        expect(@user).to be_valid
+      end
+      it 'お名前カナ「姓」は、全角カタカナであれば登録できる' do
+        @user.first_name = 'ヤマダ'
+        expect(@user).to be_valid
+      end
+      it 'お名前カナ「名」は、全角カタカナであれば登録できる' do
+        @user.last_name = 'ヤマダ'
+        expect(@user).to be_valid
+      end
+    end
+    context '新規登録できないとき' do
     it 'お名前の「姓」(全角)は、空では登録できない' do
       @user.first_name = ''
       @user.valid?
@@ -112,5 +151,6 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include("Birth date can't be blank")
     end
+   end
   end
 end
