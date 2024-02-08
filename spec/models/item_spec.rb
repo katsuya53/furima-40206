@@ -55,6 +55,16 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Scheduled delivery can't be blank")
       end
+      it '価格は、空では出品できない' do
+        @item.price = ' '
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price can't be blank")
+      end
+      it '価格は、半角数値以外では出品できない' do
+        @item.price = '３０００'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is not a number')
+      end
       it '価格は、300未満では出品できない' do
         @item.price = '299'
         @item.valid?
@@ -69,6 +79,11 @@ RSpec.describe Item, type: :model do
         @item.image = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("Image can't be blank")
+      end
+      it 'ユーザーが紐付いていなければ出品できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
