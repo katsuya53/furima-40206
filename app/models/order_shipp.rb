@@ -4,8 +4,13 @@ class OrderShipp
 
   with_options presence: true do
     validates :user_id, :item_id, :city, :addresses
-    validates :postal_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: 'is invalid. Include hyphen(-)' }
-    validates :phone_number, format: { with: /\A[a-z0-9]+\z/i, message: 'is invalid. Input half-width characters.' }
+    validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/, message: 'is is invalid. Enter it as follows (e.g. 123-4567)' }
+    validates :phone_number, format: { with: /\A\d+\z/, message: 'Phone number is invalid. Input only numbers.' }
+    validates :phone_number, format: { with: /\A\d{10,11}\z/, message: lambda { |_object, data|
+                                                                         if data[:value].to_s.size < 10
+                                                                           'Phone number is too short'
+                                                                         end
+                                                                       } }
   end
   validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
 
