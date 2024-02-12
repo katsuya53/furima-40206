@@ -6,5 +6,6 @@ FactoryBot.define do
     addresses         { Faker::Lorem.sentence }
     building          { Faker::Lorem.sentence }
     phone_number      { Faker::PhoneNumber.unique.cell_phone.gsub(/\D/, '')[0, 11] } # 10桁以上11桁以内の半角数値
+    token             { 'tok_abcdefghijk00000000000000000' }
   end
 end
