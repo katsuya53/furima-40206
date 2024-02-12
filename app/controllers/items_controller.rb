@@ -21,11 +21,10 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @items = Item.all
   end
 
   def edit
-    return if user_signed_in? && current_user == @item.user
+    return if user_signed_in? && current_user == @item.user && !@item.order.present?
 
     redirect_to action: :index
   end

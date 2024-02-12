@@ -1,0 +1,3 @@
+class Shipp < ApplicationRecord
+  belongs_to :order
+end
