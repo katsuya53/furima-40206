@@ -35,8 +35,8 @@ RSpec.describe OrderShipp, type: :model do
         @order_shipp.valid?
         expect(@order_shipp.errors.full_messages).to include("Postal code can't be blank")
       end
-      it '都道府県が空だと購入できない' do
-        @order_shipp.prefecture_id = ' '
+      it '都道府県が「--」だと購入できない' do
+        @order_shipp.prefecture_id = '--'
         @order_shipp.valid?
         expect(@order_shipp.errors.full_messages).to include("Prefecture can't be blank")
       end
@@ -64,6 +64,11 @@ RSpec.describe OrderShipp, type: :model do
         @order_shipp.phone_number = '123456789'
         @order_shipp.valid?
         expect(@order_shipp.errors.full_messages).to include('Phone number is too short')
+      end
+      it '電話番号が12桁以上だと購入できない' do
+        @order_shipp.phone_number = '123456789012'
+        @order_shipp.valid?
+        expect(@order_shipp.errors.full_messages).to include('Phone number Translation missing: en.activemodel.errors.models.order_shipp.attributes.phone_number.invalid')
       end
       it '電話番号が半角数値以外だと購入できない' do
         @order_shipp.phone_number = '１２３４５６７８９０'
