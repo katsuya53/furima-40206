@@ -36,7 +36,7 @@ RSpec.describe OrderShipp, type: :model do
         expect(@order_shipp.errors.full_messages).to include("Postal code can't be blank")
       end
       it '都道府県が「--」だと購入できない' do
-        @order_shipp.prefecture_id = '--'
+        @order_shipp.prefecture_id = '1'
         @order_shipp.valid?
         expect(@order_shipp.errors.full_messages).to include("Prefecture can't be blank")
       end

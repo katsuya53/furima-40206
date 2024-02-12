@@ -10,7 +10,7 @@ class OrderShipp
                                                                          'is too short' if data[:value].to_s.size < 10
                                                                        } }
   end
-  validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
+  validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
   validates :building, allow_nil: true, length: { maximum: 255 }
 
   def save
