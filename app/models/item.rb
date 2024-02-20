@@ -26,4 +26,12 @@ class Item < ApplicationRecord
   validates :shipping_fee_status_id, numericality: { other_than: 1, message: "can't be blank" }
   validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
   validates :scheduled_delivery_id, numericality: { other_than: 1, message: "can't be blank" }
+
+  def self.search(search)
+    if search != ''
+      Item.where('name LIKE(?)', "%#{search}%")
+    else
+      Item.all
+    end
+  end
 end

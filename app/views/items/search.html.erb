@@ -1,0 +1,45 @@
+<%= render "shared/header" %>
+
+    <% unless params[:controller] == 'items' && params[:action] == 'search' %>
+  <!-- 検索フォームのコード -->
+     <%= form_with(url: search_items_path, method: :get, class: "search-form") do |form| %>
+      <%= form.text_field :keyword, placeholder: "キーワードから探す", class: "input-box" %>
+        <%= form.button class: "search-button" do %>
+          <%= image_tag("search.png", class: "search-icon") %>
+        <% end %>
+      <% end %>
+     <% end %>
+  </div>
+</header>
+
+<ul class='item-lists'>
+<% @items.each do |item| %>
+      <li class='list'>
+        <%= link_to item_path(item) do %>
+        <div class='item-img-content'>
+          <%= image_tag item.image, class: "item-img" %>
+          <% if Order.exists?(item_id: item.id) %>
+          <div class='sold-out'>
+            <span>Sold Out!!</span>
+          </div>
+          <% end %>
+        </div>
+        <div class='item-info'>
+          <h3 class='item-name'>
+            <%= item.name %>
+          </h3>
+          <div class='item-price'>
+            <span><%= item.price %>円<br><%= ShippingFeeStatus.find(item.shipping_fee_status_id).name %></span>
+            <div class='star-btn'>
+              <%= image_tag "star.png", class:"star-icon" %>
+              <span class='star-count'>0</span>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </li>
+      <% end %>
+      </li>
+</ul>
+</div>
+<%= render "shared/footer" %>

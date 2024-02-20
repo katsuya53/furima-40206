@@ -1,0 +1,16 @@
+<!-- app/views/items/_item.html.erb -->
+
+<% @items.each do |item| %>
+  <div class="item">
+    <!-- 他のアイテムの属性も表示するコード -->
+    <div class="item-show">
+      <div class="item-box">
+        <h2 class="name">
+          <%= item.name %></h2>
+        <%= image_tag item.image, class: "item-img" %>
+        <h3><%= item.info %></h3>
+        <%= link_to "詳細を見る", item_path(item), class: "detail-link" %>
+      </div>
+    </div>
+  </div>
+<% end %>
