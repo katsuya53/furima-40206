@@ -79,5 +79,5 @@
 
 ### Association
 
-- belongs_to :item, presence: true
-- belongs_to :user, presence: true
+- belongs_to :item
+- belongs_to :user
