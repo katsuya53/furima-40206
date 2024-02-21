@@ -160,6 +160,11 @@
   resize: none;
 }
 
+.comment-info {
+  font-size: 15px;
+  color: darkgrey;
+}
+
 .comment-warn {
   padding: 10px;
   font-size: 14px;

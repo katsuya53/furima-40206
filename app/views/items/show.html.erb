@@ -100,9 +100,10 @@
     <ul class="comments_lists">
       <% @comments.each do |comment| %>
         <li class="comments_list">
-          <%= comment.text %> <%# コメントの本文はtext属性から取得 %>
-          <span class="comment-author">&nbsp;&nbsp;by <%= comment.user.nickname %></span>
-        </li>
+          <%= comment.text %><br>
+          <span class="comment-info">(by <%= comment.user.nickname %>さん - <%= comment.created_at.strftime("%Y.%m.%d %H:%M") %>)</span><br>
+          <br>
+    </li>
       <% end %>
     </ul>
   </div>
